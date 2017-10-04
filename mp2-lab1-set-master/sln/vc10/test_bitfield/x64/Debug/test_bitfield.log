@@ -1,0 +1,4 @@
+﻿  test_tbitfield.cpp
+  test_tset.cpp
+  Создание кода...
+gtest.lib(gtest-all.obj) : fatal error LNK1112: тип компьютера модуля "X86" противоречит типу целевого компьютера "x64"

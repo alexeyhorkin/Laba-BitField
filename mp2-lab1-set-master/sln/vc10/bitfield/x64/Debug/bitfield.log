@@ -1,0 +1,5 @@
+﻿  tbitfield.cpp
+..\..\..\src\tbitfield.cpp(44): warning C4334: <<: результат 32-разрядного смещения неявно преобразуется в 64-разрядное значение (предполагалось 64-разрядное смещение?)
+  tset.cpp
+  Создание кода...
+  bitfield.vcxproj -> D:\laba1\Лаба Лёха\mp2-lab1-set-master\sln\vc10\x64\Debug\bitfield.lib
