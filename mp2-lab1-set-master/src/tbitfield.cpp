@@ -7,7 +7,7 @@
 
 #include "tbitfield.h"
 
-#define BITS_IN_ONE_MEM sizeof(TELEM) * 8
+#define BITS_IN_ONE_MEM (sizeof(TELEM) * 8)
 
 TBitField::TBitField(int len)
 {
@@ -95,10 +95,12 @@ bool TBitField::operator==(const TBitField &bf) const // сравнение
 		return false;
 	else if (BitLen != bf.BitLen)
 		return false;
-	else for (int i = 0; i < MemLen - 1; i++)
-		if (pMem[i] != bf.pMem[i])
-			return false;
-	else 
+	else
+	{
+		for (int i = 0; i < MemLen - 1; i++)
+			if (pMem[i] != bf.pMem[i])
+				return false;
+
 		for (int i = (MemLen - 1)*BITS_IN_ONE_MEM; i < BitLen; i++)
 		{
 			int a;
@@ -106,27 +108,14 @@ bool TBitField::operator==(const TBitField &bf) const // сравнение
 			a = GetBit(i); b = bf.GetBit(i);
 			if (a != b) return false;
 		}
+	}
 	return true;
 }
 
 bool TBitField::operator!=(const TBitField &bf) const // сравнение
 {
-	if (MemLen != bf.MemLen)
-		return true;
-	else if (BitLen != bf.BitLen)
-		return true;
-	else for (int i = 0; i < MemLen - 1; i++)
-		if (pMem[i] != bf.pMem[i])
-			return true;
-		else
-			for (int i = (MemLen - 1)*BITS_IN_ONE_MEM; i < BitLen; i++)
-			{
-				int a;
-				int b;
-				a = GetBit(i); b = bf.GetBit(i);
-				if (a != b) return true;
-			}
-	return false;
+	bool res = (*this == bf);
+	return !res;
 }
 
 TBitField TBitField::operator|(const TBitField &bf) // операция "или"
@@ -180,11 +169,29 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
+	int k;
+	int z;
+    cout << "Enter the Bitlen" << endl;
+	cin >> k;
+	TBitField A (k);
+	cout << "Enter the BitField, please" << endl; 
+	for (int i = 0; i < A.BitLen; i++)
+	{
+		cin >> z;
+		if (z == 1)
+			A.SetBit(i);
+	}
+	bf = A;
+	
   return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
-  cout << "{" << "}\n";
+	for (int i = 0; i < bf.BitLen; i++)
+		if(bf.GetBit(i)==0)
+		ostr << 0;
+		else ostr << 1;
+		ostr << endl;
   return ostr;
 }
